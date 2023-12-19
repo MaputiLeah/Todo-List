@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    // Trait implementations for API tokens, factory support, and notification handling.
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -39,11 +40,18 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+    // Casting email_verified_at to a datetime instance.
         'email_verified_at' => 'datetime',
+    // Hashing the password attribute.
         'password' => 'hashed',
     ];
 
-    
+    /**
+     * Relationship method defining a one-to-many relationship with the Todo model.
+     * Each user can have multiple todos.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function todos()
     {
         return $this->hasMany(Todo::class);
